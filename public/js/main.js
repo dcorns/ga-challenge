@@ -2,28 +2,79 @@
  * main.js
  * Created by dcorns on 9/3/15
  * Copyright © 2015 Dale Corns
+ * Front end for Movie List Example Application
+ * @param {Object} movSrch
  */
+
 'use strict';
 //Create Global Object
-var movSrch = {};
-//DOM Rendering functions++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function buildForm(parent){
-  var frm = document.createElement('form'),
-      srch = document.createElement('input'),
-      btn = document.createElement('button');
+/**
+ * @global
+ * @type {{movieList: string, favoritesList: string, movieTable: string}}
+ */
+var movSrch = {
+  movieList:'ul for movie search return list',
+  favoritesList: 'ul for movie favorites',
+  movieTable: 'movie details'
+};
+
+/**
+ * Build the DOM
+ * @global movSrch.movieList
+ * @global movSrch.favoritesList
+ * @global movSrch.movieTable
+ */
+function buildMain(){
+  var body = document.getElementsByTagName('body')[0],
+//create static elements
+    main = document.createElement('main'),
+    movieData = document.createElement('article'),
+    listSection = document.createElement('section'),
+    detailSection = document.createElement('section'),
+    favoritesSection = document.createElement('section'),
+    favoritesBtn = document.createElement('button'),
+    frm = document.createElement('form'),
+    srch = document.createElement('input'),
+    btn = document.createElement('button'),
+    addFavoriteBtn = document.createElement('button');
+//create global static elements
+  movSrch.movieList = document.createElement('ul');
+  movSrch.favoritesList = document.createElement('ul');
+  movSrch.movieTable = document.createElement('table');
+//set static element properties and attributes
   srch.setAttribute('type', 'text');
   srch.setAttribute('id', 'search-term');
   btn.setAttribute('type', 'button');
   btn.textContent = 'SEARCH';
   btn.setAttribute('id', 'btnSearch');
   frm.setAttribute('action', '');
+  addFavoriteBtn.setAttribute('id', 'addFavoriteBtn');
+  addFavoriteBtn.textContent = 'Add To Favorites';
+  movSrch.movieTable.setAttribute('caption', 'Movie Details');
+  favoritesBtn.setAttribute('id', 'favoritesBtn');
+  favoritesBtn.textContent = 'View Favorites';
+//combine static elements to create static page
+  favoritesSection.appendChild(favoritesBtn);
+  main.appendChild(favoritesSection);
   frm.appendChild(srch);
   frm.appendChild(btn);
-  parent.appendChild(frm);
+  main.appendChild(frm);
+  body.appendChild(main);
+  main.appendChild(movieData);
+  movieData.appendChild(listSection);
+  movieData.appendChild(detailSection);
+  listSection.appendChild(movSrch.movieList);
+  detailSection.appendChild(movSrch.movieTable);
+  favoritesSection.appendChild(addFavoriteBtn);
+  favoritesSection.appendChild(movSrch.favoritesList);
 }
-
+/**
+ * Builds a list of titles using data and attaches click event handler that calls details to each list item
+ * @param data
+ * @global movSrch.movieList
+ */
 function buildApiReturnView(data){
-  movieList.innerHTML = '';
+  movSrch.movieList.innerHTML = '';
   var movieItem;
   data.forEach(function(item, idx){
     movieItem = document.createElement('li');
@@ -36,12 +87,16 @@ function buildApiReturnView(data){
     movieItem.addEventListener('click', function(e){
       makeDetails(e.target.dataset);
     });
-    movieList.appendChild(movieItem);
+    movSrch.movieList.appendChild(movieItem);
   });
 }
-
+/**
+ * Builds a table of details using data
+ * @param data
+ * @global movSrch.movieTable
+ */
 function makeDetails(data){
-  movieTable.innerHTML = '';
+  movSrch.movieTable.innerHTML = '';
   addFavoriteBtn.setAttribute('data-idx', data.idx);
   var titleRow = document.createElement('row'),
       typeRow = document.createElement('row'),
@@ -59,26 +114,30 @@ function makeDetails(data){
   titleD.innerHTML = data.title;
   titleRow.appendChild(titleH);
   titleRow.appendChild(titleD);
-  movieTable.appendChild(titleRow);
+  movSrch.movieTable.appendChild(titleRow);
   typeH.innerHTML = 'TYPE: ';
   typeD.innerHTML = data.type;
   typeRow.appendChild(typeH);
   typeRow.appendChild(typeD);
-  movieTable.appendChild(typeRow);
+  movSrch.movieTable.appendChild(typeRow);
   yearH.innerHTML = 'YEAR: ';
   yearD.innerHTML = data.year;
   yearRow.appendChild(yearH);
   yearRow.appendChild(yearD);
-  movieTable.appendChild(yearRow);
+  movSrch.movieTable.appendChild(yearRow);
   imdbIdH.innerHTML = 'IMDBID: ';
   imdbIdD.innerHTML = data.imdbid;
   imdbIdRow.appendChild(imdbIdH);
   imdbIdRow.appendChild(imdbIdD);
-  movieTable.appendChild(imdbIdRow);
+  movSrch.movieTable.appendChild(imdbIdRow);
 }
-
+/**
+ * Builds a list of titles using data and attaches click event handler that calls details to each list item
+ * @param data
+ * @global movSrch.favoritesList
+ */
 function buildFavorites(data){
-  favoritesList.innerHTML = '';
+  movSrch.favoritesList.innerHTML = '';
   var movieItem;
   data.forEach(function(item, idx){
     movieItem = document.createElement('li');
@@ -91,12 +150,16 @@ function buildFavorites(data){
     movieItem.addEventListener('click', function(e){
       makeDetails(e.target.dataset);
     });
-    favoritesList.appendChild(movieItem);
+    movSrch.favoritesList.appendChild(movieItem);
   });
 }
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //DOM actions+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Add event listeners to static DOM elements
+ */
 function buildActions(){
   document.getElementById('btnSearch').addEventListener('click', function(){
     getResults();
@@ -117,6 +180,12 @@ function buildActions(){
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //support methods++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Performs an ajax get request
+ * @param url
+ * @param cb callback
+ * @param token optional for use when using authentication
+ */
 var ajaxGet = function(url, cb, token){
   var ajaxReq = new XMLHttpRequest();
   ajaxReq.addEventListener('load', function(){
@@ -137,7 +206,13 @@ var ajaxGet = function(url, cb, token){
   //---------------------------------------------------------------
   ajaxReq.send();
 };
-
+/**
+ * Performs an ajax post request
+ * @param url
+ * @param jsonData
+ * @param cb callback
+ * @param token optional for use when using authentication
+ */
 var ajaxPost = function(url, jsonData, cb, token){
   var ajaxReq = new XMLHttpRequest();
   ajaxReq.addEventListener('load', function(){
@@ -159,6 +234,10 @@ var ajaxPost = function(url, jsonData, cb, token){
   ajaxReq.send(JSON.stringify(jsonData));
 };
 //Make request to API
+/**
+ * Request a movie list from the open movie data base api and storing it in movSrch.data
+ * @global movSrch.data array of details objects
+ */
 function getResults(){
   var searchTerm = document.getElementById('search-term').value;
   ajaxGet('http://www.omdbapi.com/?s=' + searchTerm, function(err, data){
@@ -171,7 +250,11 @@ function getResults(){
     }
   });
 }
-
+/**
+ * Event handler for adding data from target title to favorites on the server side
+ * @param e event object
+ * @global movSrch.data array of details objects
+ */
 function addFavorite(e){
   console.dir(movSrch.data[e.target.dataset.idx]);
   ajaxPost('http://localhost:3000/favorites', movSrch.data[e.target.dataset.idx], function(err, data){
@@ -184,7 +267,10 @@ function addFavorite(e){
     alert('Favorite Saved');
   });
 }
-
+/**
+ * Makes a get request to /favorites and uses the result to populate movSrch.favorites and sends the data to buildFavorites
+ * @global movSrch.favorites
+ */
 function getFavorites(){
   ajaxGet('http://localhost:3000/favorites', function(err, data){
     if(err){
@@ -197,36 +283,6 @@ function getFavorites(){
   });
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-//Build+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-var body = document.getElementsByTagName('body')[0],
-    main = document.createElement('main'),
-    movieData = document.createElement('article'),
-    listSection = document.createElement('section'),
-    detailSection = document.createElement('section'),
-    favoritesSection = document.createElement('section'),
-    favoritesList = document.createElement('ul'),
-    favoritesBtn = document.createElement('button'),
-    movieList = document.createElement('ul'),
-    movieTable = document.createElement('table'),
-    addFavoriteBtn = document.createElement('button');
-
-
-addFavoriteBtn.setAttribute('id', 'addFavoriteBtn');
-addFavoriteBtn.textContent = 'Add To Favorites';
-movieTable.setAttribute('caption', 'Movie Details');
-favoritesBtn.setAttribute('id', 'favoritesBtn');
-favoritesBtn.textContent = 'View Favorites';
-
-favoritesSection.appendChild(favoritesBtn);
-main.appendChild(favoritesSection);
-buildForm(main);
-body.appendChild(main);
-main.appendChild(movieData);
-movieData.appendChild(listSection);
-movieData.appendChild(detailSection);
-listSection.appendChild(movieList);
-detailSection.appendChild(movieTable);
-favoritesSection.appendChild(addFavoriteBtn);
-favoritesSection.appendChild(favoritesList);
+//Run the application
+buildMain();
 buildActions();
