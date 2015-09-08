@@ -9,6 +9,7 @@ angular.module('ga', [])
 .controller('gaController', function($scope, $http){
     $scope.movieList = [];
     $scope.favoritesList = [];
+    $scope.detail = {title: '', type: '', year: '', imdbid: ''};
     $scope.getResults = function(){
       var searchTerm = document.getElementById('search-term').value;
       ajaxGet('https://www.omdbapi.com/?s=' + searchTerm, function(err, data){
@@ -40,5 +41,8 @@ angular.module('ga', [])
       }, function(res){//error
         console.error(res.data);
       });
+    };
+    $scope.setDetails = function(e){
+      $scope.detail.title = e.target.innerText;
     };
   });

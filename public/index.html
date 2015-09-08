@@ -9,6 +9,14 @@
 </head>
 <body>
 <main ng-controller = "gaController">
+    <section>
+        <table>
+            <tr><th>TITLE</th><td>{{detail.title}}</td></tr>
+            <tr><th>TYPE</th><td>{{detail.type}}</td></tr>
+            <tr><th>YEAR</th><td>{{detail.year}}</td></tr>
+            <tr><th>IMDBID</th><td>{{detail.imdbid}}</td></tr>
+        </table>
+    </section>
 <section>
     <button id="favoritesBtn" ng-click="getFavorites()">View Favorites</button>
     <button id="addFavoritesBtn" ng-click="addFavorite()">Add To Favorites</button>
@@ -26,7 +34,7 @@
             </ul>
         </section>
         <section>
-            <ul ng-click="getDetails()">
+            <ul ng-click="setDetails($event)">
                 <li ng-repeat="fmovie in favoritesList">
                     {{fmovie.Title}}
                 </li>
