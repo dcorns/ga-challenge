@@ -240,7 +240,7 @@ var ajaxPost = function(url, jsonData, cb, token){
  */
 function getResults(){
   var searchTerm = document.getElementById('search-term').value;
-  ajaxGet('http://www.omdbapi.com/?s=' + searchTerm, function(err, data){
+  ajaxGet('https://www.omdbapi.com/?s=' + searchTerm, function(err, data){
     if(err){
       console.error(err);
     }
