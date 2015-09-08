@@ -1,13 +1,13 @@
 {
   "name": "js-coding-challenge",
   "version": "0.0.0",
-  "description": "JS Server for WDI code challenge",
+  "description": "JS Server for movie list",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node api/server.js"
   },
-  "author": "Neel Patel <neelp22@gmail.com> (https://github.com/darthneel)",
+  "author": "Dale Corns <codefellow@gmail.com> (https://github.com/dcorns)",
   "license": "ISC",
   "dependencies": {
     "express": "^4.12.2",

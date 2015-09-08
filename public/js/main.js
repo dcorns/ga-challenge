@@ -257,7 +257,7 @@ function getResults(){
  */
 function addFavorite(e){
   console.dir(movSrch.data[e.target.dataset.idx]);
-  ajaxPost('http://localhost:3000/favorites', movSrch.data[e.target.dataset.idx], function(err, data){
+  ajaxPost('/favorites', movSrch.data[e.target.dataset.idx], function(err, data){
     if(err){
       console.error(err);
       alert('There was a problem saving favorite');
@@ -272,7 +272,7 @@ function addFavorite(e){
  * @global movSrch.favorites
  */
 function getFavorites(){
-  ajaxGet('http://localhost:3000/favorites', function(err, data){
+  ajaxGet('/favorites', function(err, data){//http://localhost:3000
     if(err){
       console.error(err);
     }
