@@ -1,17 +1,21 @@
 <!DOCTYPE html>
+<!--Make the page an angular app using the module named 'ga'-->
 <html ng-app = "ga">
 <head lang="en">
     <meta charset="UTF-8">
     <title>Challenge</title>
+    <!--including angular here using the cdn-->
     <script
             src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.js">
     </script>
     <link href="style/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<!--We only have one controller for this simple page. Everything inside of main is in the gaController's scope-->
 <main ng-controller = "gaController">
     <section>
         <table>
+            <!--Here the table is bound to the detail object(defined in the controller) using handle bars.-->
             <tr><th>TITLE</th><td>{{detail.Title}}</td></tr>
             <tr><th>TYPE</th><td>{{detail.Type}}</td></tr>
             <tr><th>YEAR</th><td>{{detail.Year}}</td></tr>
@@ -19,16 +23,20 @@
         </table>
     </section>
 <section>
+    <!--Here we are using ng-click to specify event handlers in the controller scope-->
     <button id="favoritesBtn" ng-click="getFavorites()">View Favorites</button>
     <button id="addFavoritesBtn" ng-click="addFavorite()">Add To Favorites</button>
 </section>
     <form action="">
+        <!--using ng-model we set up 2 way binding with $scope.searchterm to simplify add the search term to the api request-->
         <input type="text" id="search-term" ng-model="searchterm">
         <button id="btnSearch" ng-click="getResults()" type="button">SEARCH</button>
     </form>
     <article>
         <section>
+            <!--$event is the angular event object that is passed when events occur-->
             <ul ng-click="setDetails($event)">
+                <!--using ng-repeat we are able to build a two way bound unordered list based on an array of objects. By using the 'data' attribute we are able to easily bind the details section to the selected title's data. We do it again below.-->
                 <li ng-repeat="fmovie in favoritesList" data-detail="{{fmovie}}">
                     {{fmovie.Title}}
                 </li>
@@ -43,6 +51,7 @@
         </section>
     </article>
 </main>
+<!--Here we include the angular and js code for our application-->
 <script src="js/angularMain.js"></script>
 </body>
 </html>
