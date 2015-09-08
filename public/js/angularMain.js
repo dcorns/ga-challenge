@@ -5,8 +5,8 @@
  */
 'use strict';
 
-angular.module('gaApp', [])
-.controller('gaController', function($scope){
+angular.module('ga', [])
+.controller('gaController', function($scope, $http){
     $scope.movieList = [];
     $scope.favoritesList = [];
     $scope.getResults = function(){
@@ -34,14 +34,11 @@ angular.module('gaApp', [])
       });
     };
     $scope.getFavorites = function(){
-      ajaxGet('/favorites', function(err, data){//http://localhost:3000
-        if(err){
-          console.error(err);
-        }
-        else{
-          movSrch.favorites = data;
-          buildFavorites(movSrch.favorites);
-        }
+      var remoteFavorites = $http.get('/favorites');
+      remoteFavorites.then(function(res){//success
+        $scope.favoritesList = res.data;
+      }, function(res){//error
+        console.error(res.data);
       });
     };
   });
