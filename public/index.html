@@ -29,15 +29,15 @@
     <article>
         <section>
             <ul ng-click="setDetails($event)">
-                <li ng-repeat="movie in movieList" data-detail="{{movie}}">
-                    {{movie.Title}}
+                <li ng-repeat="fmovie in favoritesList" data-detail="{{fmovie}}">
+                    {{fmovie.Title}}
                 </li>
             </ul>
         </section>
         <section>
             <ul ng-click="setDetails($event)">
-                <li ng-repeat="fmovie in favoritesList" data-detail="{{fmovie}}">
-                    {{fmovie.Title}}
+                <li ng-repeat="movie in movieList" data-detail="{{movie}}">
+                    {{movie.Title}}
                 </li>
             </ul>
         </section>

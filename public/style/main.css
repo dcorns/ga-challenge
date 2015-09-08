@@ -1,0 +1,17 @@
+main{
+    border: inset black medium;
+    width: 100%;
+}
+form{
+    border: solid darkblue medium;
+}
+article{
+    border: solid darkblue medium;
+}
+section{
+    border: solid green medium;
+    background: lightblue;
+}
+ul{
+    list-style: none;
+}
