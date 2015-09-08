@@ -11,10 +11,10 @@
 <main ng-controller = "gaController">
     <section>
         <table>
-            <tr><th>TITLE</th><td>{{detail.title}}</td></tr>
-            <tr><th>TYPE</th><td>{{detail.type}}</td></tr>
-            <tr><th>YEAR</th><td>{{detail.year}}</td></tr>
-            <tr><th>IMDBID</th><td>{{detail.imdbid}}</td></tr>
+            <tr><th>TITLE</th><td>{{detail.Title}}</td></tr>
+            <tr><th>TYPE</th><td>{{detail.Type}}</td></tr>
+            <tr><th>YEAR</th><td>{{detail.Year}}</td></tr>
+            <tr><th>IMDBID</th><td>{{detail.imdbID}}</td></tr>
         </table>
     </section>
 <section>
@@ -22,20 +22,20 @@
     <button id="addFavoritesBtn" ng-click="addFavorite()">Add To Favorites</button>
 </section>
     <form action="">
-        <input type="text" id="search-term">
+        <input type="text" id="search-term" ng-model="searchterm">
         <button id="btnSearch" ng-click="getResults()" type="button">SEARCH</button>
     </form>
     <article>
         <section>
-            <ul>
-                <li ng-repeat="movie in movieList">
-                    {{movie.title}}
+            <ul ng-click="setDetails($event)">
+                <li ng-repeat="movie in movieList" data-detail="{{movie}}">
+                    {{movie.Title}}
                 </li>
             </ul>
         </section>
         <section>
             <ul ng-click="setDetails($event)">
-                <li ng-repeat="fmovie in favoritesList">
+                <li ng-repeat="fmovie in favoritesList" data-detail="{{fmovie}}">
                     {{fmovie.Title}}
                 </li>
             </ul>
