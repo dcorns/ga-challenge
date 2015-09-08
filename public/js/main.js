@@ -55,6 +55,7 @@ function buildMain(){
   favoritesBtn.textContent = 'View Favorites';
 //combine static elements to create static page
   favoritesSection.appendChild(favoritesBtn);
+  main.appendChild(detailSection);
   main.appendChild(favoritesSection);
   frm.appendChild(srch);
   frm.appendChild(btn);
@@ -62,10 +63,9 @@ function buildMain(){
   body.appendChild(main);
   main.appendChild(movieData);
   movieData.appendChild(listSection);
-  movieData.appendChild(detailSection);
   listSection.appendChild(movSrch.movieList);
   detailSection.appendChild(movSrch.movieTable);
-  favoritesSection.appendChild(addFavoriteBtn);
+  movieData.appendChild(addFavoriteBtn);
   favoritesSection.appendChild(movSrch.favoritesList);
 }
 /**
