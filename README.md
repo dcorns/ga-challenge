@@ -3,8 +3,8 @@ This application uses node express backend and a vanilla JavaScript front end to
 ####See the application live
 [ga-movie-list](https://ga-movie-list.herokuapp.com/)
 
-
+    
 ###Three branches are included in this repo
-master - code chosen to be permanent through out
-js-only - this is a vanilla JavaScript implementation of the application and currently the only one deployed to heroku
-angular - as the title suggest this is an angular implementation of the application
+####master - code chosen to be permanent through out
+####js-only - this is a vanilla JavaScript implementation of the application and currently the only one deployed to heroku
+####angular - as the title suggest this is an angular implementation of the application
