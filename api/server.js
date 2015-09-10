@@ -20,14 +20,6 @@ app.get('/', function(req, res){
   res.send('/');
 });
 
-app.get('/search/*', function(req, res){
-  var searchTerm = req.path.substr(req.path.lastIndexOf('/') + 1);
-  console.log(searchTerm);
-  var apiRes = searchAPI(searchTerm);
-  console.log(apiRes);
-  res.send(apiRes);
-});
-
 app.get('/favorites', function(req, res) {
   var data = [];
   try{
@@ -39,6 +31,7 @@ app.get('/favorites', function(req, res) {
   }
   res.setHeader('Content-Type', 'application/json');
   res.send(data);
+  res.status(200).end(http.STATUS_CODES[200]);
 });
 
 app.post('/favorites', function(req, res){
@@ -66,3 +59,6 @@ app.post('/favorites', function(req, res){
 app.listen(app.get('port'), function(){
   console.log('Listening on port ' + app.get('port'));
 });
+
+//Add the export for unit testing
+module.exports = app;
