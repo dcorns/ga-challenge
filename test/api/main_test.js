@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var assert = require('assert');
+var expect = require('chai');
 describe('buildApiReturnview', function(){
-
+console.log('main test');
 });
